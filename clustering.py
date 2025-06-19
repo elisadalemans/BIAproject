@@ -5,7 +5,8 @@ from pycaret.clustering import ClusteringExperiment
 
 data = pd.read_csv('~/BIAproject/Dataset_csv_format/data.csv')
 
-data = data.dropna(subset=["TimePeriod"])
+# data = data.dropna(subset=["TimePeriod"])
+# data = data[pd.to_numeric(data["Sum of Quantity Shipped"], errors="coerce") > 0]
 
 #initiate experiment
 s = ClusteringExperiment()
@@ -20,16 +21,16 @@ s.setup(data,
 # Create an initial model
 kmeans = s.create_model('kmeans')
 
-#elbow plot
-s.plot_model(kmeans, plot = 'elbow')
+# Elbow plot
+s.plot_model(kmeans, plot = 'elbow', save=True)
 
-# # Visualize the distribution of the first few variables
-# for column in data.columns[:5]:  # Adjust the range as needed
-#     plt.figure(figsize=(10, 6))
-#     sns.histplot(data[column], kde=True)
-#     plt.title(f'Distribution of {column}')
-#     plt.savefig("plot.png")
+# Input the number of clusters
+kmeans = s.create_model('kmeans', num_clusters = 4)
 
-# # Scale the data
-# scaler = StandardScaler()
-# scaled_data = scaler.fit_transform(data)
+# s.evaluate_model(kmeans)
+
+df_kmeans = s.assign_model(kmeans)
+df_kmeans.head()
+
+sns.pairplot(data=df_kmeans, hue="Cluster")
+plt.show()
