@@ -3,15 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pycaret.clustering import ClusteringExperiment
 
-data = pd.read_csv('/mnt/c/Users/elisa/Documents/school/BIA/project/Dataset_csv_format/data.csv')
+data = pd.read_csv('~/BIAproject/Dataset_csv_format/data.csv')
 
 data = data.dropna(subset=["TimePeriod"])
-
-
-
-# Display basic information about the dataset
-# print(data.info())
-# print(data.describe())
 
 #initiate experiment
 s = ClusteringExperiment()
@@ -20,7 +14,7 @@ s.setup(data,
         normalize=True, 
         normalize_method="robust",
         session_id=123,
-        numeric_features=["Sum Of Quantity Shipped"],
+        numeric_features=["Sum of Quantity Shipped"],
         ignore_features=["Code", "TimePeriod"])
 
 # Create an initial model
