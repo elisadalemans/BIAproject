@@ -3,12 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pycaret.clustering import ClusteringExperiment
 
-data = pd.read_csv('~/BIAproject/Dataset_csv_format/data.csv')
+# data = pd.read_csv('~/BIAproject/Dataset_csv_format/data_merged.csv')
+data = pd.read_csv('/mnt/c/Users/elisa/Documents/school/BIA/project/Dataset_csv_format/data_merged.csv')
 
-# data = data.dropna(subset=["TimePeriod"])
-# data = data[pd.to_numeric(data["Sum of Quantity Shipped"], errors="coerce") > 0]
+# Cleaning the data
+data = data.dropna(subset=["TimePeriod"])
+data = data[pd.to_numeric(data["Sum of Quantity Shipped"], errors="coerce") > 0]
 
-#initiate experiment
+# Initiate experiment
 s = ClusteringExperiment()
 
 s.setup(data,
@@ -28,7 +30,6 @@ s.plot_model(kmeans, plot = 'elbow', save=True)
 kmeans = s.create_model('kmeans', num_clusters = 4)
 
 # s.evaluate_model(kmeans)
-
 df_kmeans = s.assign_model(kmeans)
 df_kmeans.head()
 
