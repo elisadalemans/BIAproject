@@ -3,35 +3,60 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pycaret.clustering import ClusteringExperiment
 
-# data = pd.read_csv('~/BIAproject/Dataset_csv_format/data_merged.csv')
-data = pd.read_csv('/mnt/c/Users/elisa/Documents/school/BIA/project/Dataset_csv_format/data_merged.csv')
 
-# Cleaning the data
-data = data.dropna(subset=["TimePeriod"])
-data = data[pd.to_numeric(data["Sum of Quantity Shipped"], errors="coerce") > 0]
+if __name__ == "__main__":
 
-# Initiate experiment
-s = ClusteringExperiment()
+        # Read in the csv file
+        df = pd.read_csv('~/BIAproject/Dataset_csv_format/data_merged.csv')
+        # data = pd.read_csv('/mnt/c/Users/elisa/Documents/school/BIA/project/Dataset_csv_format/data_merged.csv')
 
-s.setup(data,
-        normalize=True, 
-        normalize_method="robust",
-        session_id=123,
-        numeric_features=["Sum of Quantity Shipped"],
-        ignore_features=["Code", "TimePeriod"])
+        # Cleaning the data
+        df = df.dropna(subset=["TimePeriod"])
+        df = df[pd.to_numeric(df["Sum of Quantity Shipped"], errors="coerce") > 0]
 
-# Create an initial model
-kmeans = s.create_model('kmeans')
+        data = df.groupby("GenusId").agg(
+        total_quantity=("Sum of Quantity Shipped", "sum"),
+        avg_quantity=("Sum of Quantity Shipped", "mean"),
+        std_quantity=("Sum of Quantity Shipped", "std"),
+        shipment_count=("Sum of Quantity Shipped", "count"),
+        location_count=("LocationId", "nunique"),
+        period_count=("TimePeriod", "nunique")
+        ).fillna(0).reset_index()
 
-# Elbow plot
-s.plot_model(kmeans, plot = 'elbow', save=True)
+        # Initiate experiment
+        s = ClusteringExperiment()
 
-# Input the number of clusters
-kmeans = s.create_model('kmeans', num_clusters = 4)
+        s.setup(data,
+                normalize=True, 
+                normalize_method="robust",
+                session_id=123,
+                ignore_features=["GenusID"])
 
-# s.evaluate_model(kmeans)
-df_kmeans = s.assign_model(kmeans)
-df_kmeans.head()
+        # Create an initial model
+        kmeans = s.create_model('kmeans')
 
-sns.pairplot(data=df_kmeans, hue="Cluster")
-plt.show()
+        # Elbow plot
+        s.plot_model(kmeans, plot = 'elbow', save=True)
+        s.plot_model(kmeans, plot='silhouette', save=True)
+
+        print("Please choose the number of clusters by checking the elbow plot")
+
+        while True: 
+                cluster_input = input("Please choose a number: \n")
+                if cluster_input.isnumeric():
+                        cluster_input = int(cluster_input)
+                        break
+                else:
+                        print("Number out of range. Please choose between 1 and 9.\n")
+               
+        # Input the number of clusters
+        kmeans = s.create_model('kmeans', num_clusters = cluster_input)
+
+        df_kmeans = s.assign_model(kmeans)
+        print(df_kmeans.head())
+        df_kmeans.to_csv('location_clusters.csv', index=False)
+
+        s.plot_model(kmeans, 'cluster')
+
+        sns.pairplot(data=df_kmeans, hue="Cluster")
+        plt.show()
