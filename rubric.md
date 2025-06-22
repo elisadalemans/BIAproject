@@ -1,7 +1,6 @@
 # Rubric
 
 ## Analytics Overview (excellence):  
-
 - Create and include a workflow diagram showing: 
 - The overall predictive analytics process 
 - Data loading/preprocessing steps (if applicable) 
