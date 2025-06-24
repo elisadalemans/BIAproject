@@ -38,3 +38,8 @@
 
 ## Clearly justify the final model selection: (excellence): 
 - Compare model performances 
+
+nu kijken naar de locatie. 
+op locatie clusteren
+focus op dat deel van het productiemodel
+andere vraag zoals 
