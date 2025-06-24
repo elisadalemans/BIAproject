@@ -5,7 +5,7 @@ import pandas as pd
 
 df = pd.read_csv('~/BIAproject/location_clusters.csv')
 
-features = ['total_quantity', 'avg_quantity', 'std_quantity', 'shipment_count', 'location_count', 'period_count']
+features = ['total_quantity', 'shipment_count']
 
 for feature in features:
     plt.figure(figsize=(8, 4))
