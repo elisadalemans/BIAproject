@@ -14,13 +14,14 @@ if __name__ == "__main__":
         df = df.dropna(subset=["TimePeriod"])
         df = df[pd.to_numeric(df["Sum of Quantity Shipped"], errors="coerce") > 0]
 
-        data = df.groupby("GenusId").agg(
-        total_quantity=("Sum of Quantity Shipped", "sum"),
-        avg_quantity=("Sum of Quantity Shipped", "mean"),
-        std_quantity=("Sum of Quantity Shipped", "std"),
-        shipment_count=("Sum of Quantity Shipped", "count"),
-        location_count=("LocationId", "nunique"),
-        period_count=("TimePeriod", "nunique")
+        # data = df.groupby("GenusId").agg(
+        #         total_quantity=("Sum of Quantity Shipped", "sum"),
+        #         shipment_count=("Sum of Quantity Shipped", "count"),
+        # ).fillna(0).reset_index()
+
+        data = df.groupby("LocationId").agg(
+                total_quantity=("Sum of Quantity Shipped", "sum"),
+                shipment_count=("Sum of Quantity Shipped", "count"),
         ).fillna(0).reset_index()
 
         # Initiate experiment
