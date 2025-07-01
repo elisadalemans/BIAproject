@@ -2,6 +2,10 @@
 
 This project performs a clustering analysis using the PyCaret machine learning library. The goal is to identify patterns in shipment quantity and frequency across different genera of plants and locations.
 
+## Cloning the Repository
+
+To clone the repository, follow the [link](https://github.com/elisadalemans/BIAproject.git).
+
 ## What Does This Script Do?
 
 - Loads and cleans a dataset of shipment records, genera, and locations.
