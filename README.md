@@ -6,7 +6,7 @@ This project performs a clustering analysis using the PyCaret machine learning l
 
 To clone the repository, follow the [link](https://github.com/elisadalemans/BIAproject.git).    
 
-## What Does This Script Do?
+## Function of the Script
 
 - Loads and cleans a dataset of shipment records, genera, and locations.
 - Aggregates shipment data by GenusId or LocationId.
