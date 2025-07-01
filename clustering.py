@@ -56,10 +56,13 @@ def number_clusters():
 def main():
         filepath = '~/BIAproject/Dataset_csv_format/data_merged.csv'
 
+        # Load the data
         data = load_data(filepath)
         
+        # Cluster based on location or genus
         cluster_choice = choose_cluster()
 
+        # Aggregate the data
         data, cluster, ignore = aggregate_data(data, cluster_choice)
 
         # Initiate the experiment
