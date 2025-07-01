@@ -4,7 +4,7 @@ This project performs a clustering analysis using the PyCaret machine learning l
 
 ## Cloning the Repository
 
-To clone the repository, follow the [link](https://github.com/elisadalemans/BIAproject.git).
+To clone the repository, follow the [link](https://github.com/elisadalemans/BIAproject.git).    
 
 ## What Does This Script Do?
 
